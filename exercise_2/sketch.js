@@ -1,27 +1,28 @@
 const r = require("raylib");
 const geometry = require("./geometry")
 
+const FPS = 60;
+
 let windowWidth;
 let windowHeight;
-let FPS;
+let windowTitle;
 
-let parentRectWidth = 500;
-let parentRectHeight = 200;
+let parentRectWidth;
+let parentRectHeight;
 
-let parentRectXCoordinate = 100;
-let parentRectYCoordinate = 40;
+let parentRectXCoordinate;
+let parentRectYCoordinate;
 
-let childRectWidth = 300;
-let childRectHeight = 100;
+let childRectWidth;
+let childRectHeight;
 
 let childRectXCoordinate = 0;
 let childRectYCoordinate = 0;
 
-function setWindowDimensions(templateTitle, templateWidth, templateHeight, templateFPS) {
-    TITLE = templateTitle;
-    windowWidth = templateWidth;
-    windowHeight = templateHeight;
-    FPS = templateFPS;
+function setWindowDimensions(title, width, height) {
+    windowTitle = title;
+    windowWidth = width;
+    windowHeight = height;
 }
 
 function setParentRectDimensions(posX, posY, width, height) {
@@ -37,7 +38,7 @@ function setChildRectDimensions(width, height) {
 }
 
 function setup() {
-    r.InitWindow(windowWidth, windowHeight, "CENTER RECTANGLE");
+    r.InitWindow(windowWidth, windowHeight, windowTitle);
     r.SetTargetFPS(FPS);
 }
 
@@ -51,6 +52,7 @@ function draw() {
     r.ClearBackground(r.SKYBLUE)
 
     r.DrawRectangle(parentRectXCoordinate, parentRectYCoordinate, parentRectWidth, parentRectHeight, r.WHITE);
+
     r.DrawRectangle(childRectXCoordinate, childRectYCoordinate, childRectWidth, childRectHeight, r.RED);
 
     r.EndDrawing();
@@ -63,7 +65,6 @@ function isRunning() {
 function teardown() {
     r.CloseWindow();
 }
-
 
 module.exports = {
     setWindowDimensions, 
