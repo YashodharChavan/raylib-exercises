@@ -1,44 +1,12 @@
 const r = require("raylib")
 const geometry = require("./geometry")
 
-const FPS = 60;
-const RADIUS = 15;
-
-let windowWidth;
-let windowHeight;
-let windowTitle;
-
-let sourceX;
-let sourceY;
-
-let dest1X;
-let dest1Y;
-
-let dest2X;
-let dest2Y;
-
-function setWindowDimensions(title, width, height) {
-    windowTitle = title;
-    windowWidth = width;
-    windowHeight = height;
-}
-
-function setSourceDimensions(X, Y) {
-    sourceX = X;
-    sourceY = Y;
-}
-
-function setDest1Dimensions(X, Y) {
-    dest1X = X;
-    dest1Y = Y;
-}
-
-function setDest2Dimensions(X, Y) {
-    dest2X = X;
-    dest2Y = Y;
-}
-
 function setup() {
+    const windowTitle = "CLOSER TARGET";
+    const windowWidth = 700;
+    const windowHeight = 800;
+    const FPS = 60;
+
     r.InitWindow(windowWidth, windowHeight, windowTitle);
     r.SetTargetFPS(FPS);
 }
@@ -50,13 +18,27 @@ function isRunning() {
 function update() { }
 
 function drawCircle(text, X, Y, color) {
+    const RADIUS = 15;
+
     const textWidth = r.MeasureText(text, 16);
 
+    const textOffsetX = X - textWidth / 2
+    const textOffsetY = Y + RADIUS
+
     r.DrawCircle(X, Y, RADIUS, color);
-    r.DrawText(text, X - textWidth / 2, Y + RADIUS + 5, 16, color);
+    r.DrawText(text, textOffsetX, textOffsetY + 5, 16, color);
 }
 
 function draw() {
+    const sourceX = 150;
+    const sourceY = 170;
+
+    const dest1X = 200;
+    const dest1Y = 100;
+
+    const dest2X = 600;
+    const dest2Y = 500;
+
     r.BeginDrawing();
     r.ClearBackground(r.WHITE);
 
@@ -64,14 +46,13 @@ function draw() {
     drawCircle("dest1", dest1X, dest1Y, r.GREEN);
     drawCircle("dest2", dest2X, dest2Y, r.BLACK);
 
-    drawClosestLine(r.BLACK);
+    drawClosestLine(sourceX, sourceY, dest1X, dest1Y, dest2X, dest2Y, r.BLACK);
 
     r.EndDrawing();
 }
 
-function drawClosestLine(color) {
+function drawClosestLine(sourceX, sourceY, dest1X, dest1Y, dest2X, dest2Y, color) {
     const sourcetoDestination1 = geometry.cartesianDistance(sourceX, sourceY, dest1X, dest1Y);
-
     const sourceToDestination2 = geometry.cartesianDistance(sourceX, sourceY, dest2X, dest2Y);
 
     let targetX = dest1X;
@@ -90,10 +71,6 @@ function teardown() {
 }
 
 module.exports = {
-    setWindowDimensions,
-    setSourceDimensions,
-    setDest1Dimensions,
-    setDest2Dimensions,
     setup,
     isRunning,
     update,

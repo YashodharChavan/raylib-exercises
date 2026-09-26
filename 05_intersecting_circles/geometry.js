@@ -1,7 +1,3 @@
-function getCenterOffset(parentDimension, childDimension) {
-    return (parentDimension - childDimension) / 2;
-}
-
 function square(x) {
     return x * x;
 }
@@ -11,6 +7,5 @@ function cartesianDistance(x1, y1, x2, y2) {
 }
 
 module.exports = {
-    getCenterOffset,
     cartesianDistance
 }

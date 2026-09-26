@@ -8,9 +8,6 @@ function loop() {
 }
 
 function main() {
-    sketch.setWindowDimensions("CENTER RECTANGLE", 300, 400);
-    sketch.setRectDimensions(150, 150);
-
     sketch.setup()
     loop();
     sketch.teardown();

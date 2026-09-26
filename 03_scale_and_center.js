@@ -4,6 +4,9 @@ const windowWidth = 700
 const windowHeight = 400
 const FPS = 50
 
+const parentRectX = 50;
+const parentRectY = 50;
+
 const parentRectWidth = 500
 const parentRectHeight = 200
 
@@ -15,45 +18,38 @@ function setup() {
     r.SetTargetFPS(FPS);
 }
 
-function calculateCenterCordinates(windowDimension, rectDimension) {
+function getCenterOffset(windowDimension, rectDimension) {
     return (windowDimension - rectDimension) / 2;
 }
 
-function calculateScaledDimension(dimension, scale) {
+function scaleDimension(dimension, scale) {
     return dimension * scale;
 }
 
-function centerRectangle(windowWidth, windowHeight, parentRectWidth, parentRectHeight, color) {
-    r.DrawRectangle(calculateCenterCordinates(windowWidth, parentRectWidth), calculateCenterCordinates(windowHeight, parentRectHeight), parentRectWidth, parentRectHeight, color);
-}
+function centerRectangleByRatio(parentRectX, parentRectY, parentWidth, parentHeight, widthRatio, heightRatio, color) {
+    const childWidth = scaleDimension(parentWidth, widthRatio);
+    const childHeight = scaleDimension(parentHeight, heightRatio);
 
-function centerRectangleByRatio(windowWidth, windowHeight, parentWidth, parentHeight, widthRatio, heightRatio, color) {
-    const parentCenterXCordinate = calculateCenterCordinates(windowWidth, parentRectWidth);
-    const parentCenterYCordinate = calculateCenterCordinates(windowHeight, parentRectHeight);
+    const childCenterX = parentRectX + getCenterOffset(parentWidth, childWidth);
+    const childCenterY = parentRectY + getCenterOffset(parentHeight, childHeight);
 
-    const childWidth =calculateScaledDimension(parentWidth, widthRatio);
-    const childHeight = calculateScaledDimension(parentHeight, heightRatio);
-
-    const childCenterXCordinate = calculateCenterCordinates(parentWidth, childWidth);
-    const childCenterYCordinate = calculateCenterCordinates(parentHeight, childHeight);
-
-    r.DrawRectangle(parentCenterXCordinate + childCenterXCordinate, parentCenterYCordinate + childCenterYCordinate, childWidth, childHeight, color);
+    r.DrawRectangle(childCenterX, childCenterY, childWidth, childHeight, color);
 }
 
 function draw() {
     r.BeginDrawing();
     r.ClearBackground(r.SKYBLUE);
 
-    centerRectangle(windowWidth, windowHeight, parentRectWidth, parentRectHeight, r.WHITE);
-    centerRectangleByRatio(windowWidth, windowHeight, parentRectWidth, parentRectHeight, widthRatio, heightRatio, r.RED);
+    r.DrawRectangle(parentRectX, parentRectY, parentRectWidth, parentRectHeight, r.WHITE);
+    centerRectangleByRatio(parentRectX, parentRectY, parentRectWidth, parentRectHeight, widthRatio, heightRatio, r.RED);
 
     r.EndDrawing();
 }
 
-function update() {}
+function update() { }
 
 function loop() {
-    while(!r.WindowShouldClose()) {
+    while (!r.WindowShouldClose()) {
         update();
         draw();
     }

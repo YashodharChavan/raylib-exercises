@@ -3,5 +3,5 @@ function getCenterOffset(parentDimension, childDimension) {
 }
 
 module.exports = {
- getCenterOffset
+ getCenterOffset,
 }

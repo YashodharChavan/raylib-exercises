@@ -1,40 +1,13 @@
 const r = require("raylib")
 const geometry = require("./geometry")
 
-const FPS = 60;
-let windowTitle;
-
-let windowWidth;
-let windowHeight;
-
-let circle1Radius;
-let circle2Radius;
-
-let circle1X;
-let circle1Y;
-
-let circle2X;
-let circle2Y;
-
-function setWindowDimensions(title, width, height) {
-    windowTitle = title;
-    windowWidth = width;
-    windowHeight = height;
-}
-
-function setCircle1Details(X, Y, radius) {
-    circle1X = X;
-    circle1Y = Y;
-    circle1Radius = radius;
-}
-
-function setCircle2Details(X, Y, radius) {
-    circle2X = X;
-    circle2Y = Y;
-    circle2Radius = radius;
-}
 
 function setup() {
+    const windowTitle = "INTERSECTING CIRCLES";
+    const windowWidth = 500;
+    const windowHeight = 400;
+    const FPS = 60;
+
     r.InitWindow(windowWidth, windowHeight, windowTitle);
     r.SetTargetFPS(FPS)
 }
@@ -46,8 +19,14 @@ function isRunning() {
 function update() { }
 
 function draw() {
-    r.BeginDrawing();
-    r.ClearBackground(r.WHITE);
+    const circle1Radius = 40;
+    const circle2Radius = 50;
+
+    const circle1X = 70;
+    const circle1Y = 140;
+
+    const circle2X = 80;
+    const circle2Y = 120;
 
     const distance = geometry.cartesianDistance(circle1X, circle1Y, circle2X, circle2Y);
     let color = r.BLACK;
@@ -55,6 +34,9 @@ function draw() {
     if (distance <= circle1Radius + circle2Radius) {
         color = r.RED;
     }
+    
+    r.BeginDrawing();
+    r.ClearBackground(r.WHITE);
 
     r.DrawCircle(circle1X, circle1Y, circle1Radius, color);
     r.DrawCircle(circle2X, circle2Y, circle2Radius, color);
@@ -67,9 +49,6 @@ function teardown() {
 }
 
 module.exports = {
-    setWindowDimensions,
-    setCircle1Details,
-    setCircle2Details,
     setup,
     isRunning,
     update,
